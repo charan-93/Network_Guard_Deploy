@@ -1,0 +1,32 @@
+services:
+  - type: web
+    name: network-guard-backend
+    runtime: python
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn --worker-class eventlet -w 1 --bind 0.0.0.0:$PORT app:app
+    envVars:
+      - key: SECRET_KEY
+        value: prod-secret-key-change-in-production
+      - key: JWT_SECRET_KEY
+        value: prod-jwt-secret-key-change-in-production
+      - key: ADMIN_EMAIL
+        value: admin@example.com
+      - key: ADMIN_PASSWORD
+        value: admin123
+      - key: CORS_ORIGINS
+        value: https://network-guard-deploy-1.onrender.com
+      - key: FLASK_ENV
+        value: production
+
+  - type: web
+    name: network-guard-frontend
+    runtime: static
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./build
+    envVars:
+      - key: REACT_APP_API_URL
+        value: https://srv-d48akp7diees739r9vv0.onrender.com/api
+      - key: REACT_APP_SOCKET_URL
+        value: https://srv-d48akp7diees739r9vv0.onrender.com
