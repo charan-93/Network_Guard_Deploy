@@ -372,10 +372,13 @@ if __name__ == '__main__':
     print("⚠️  Change default credentials in production!")
     print("=" * 60)
     
+    port = int(os.environ.get('PORT', Config.FLASK_PORT))
+    debug = os.environ.get('FLASK_ENV') != 'production'
+
     socketio.run(
         app,
         host='0.0.0.0',
-        port=Config.FLASK_PORT,
-        debug=True,
+        port=port,
+        debug=debug,
         allow_unsafe_werkzeug=True
     )

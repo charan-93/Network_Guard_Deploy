@@ -1,0 +1,30 @@
+services:
+  - type: web
+    name: server-vulnerability-backend
+    runtime: python3
+    rootDir: Server_Vunerability/backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: python app.py
+    envVars:
+      - key: SECRET_KEY
+        value: your-secret-key
+      - key: JWT_SECRET_KEY
+        value: your-jwt-secret
+      - key: ADMIN_EMAIL
+        value: your-admin-email
+      - key: ADMIN_PASSWORD
+        value: your-admin-password
+      - key: CORS_ORIGINS
+        value: https://your-frontend-url.onrender.com
+
+  - type: web
+    name: server-vulnerability-frontend
+    runtime: static
+    rootDir: Server_Vunerability/frontend
+    buildCommand: npm run build
+    staticPublishPath: ./build
+    envVars:
+      - key: REACT_APP_API_URL
+        value: https://server-vulnerability-backend.onrender.com/api
+      - key: REACT_APP_SOCKET_URL
+        value: https://server-vulnerability-backend.onrender.com

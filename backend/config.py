@@ -11,7 +11,7 @@ class Config:
     FLASK_PORT = int(os.getenv('FLASK_PORT', 5000))
     CAPTURE_DIR = os.path.join(os.path.dirname(__file__), '..', 'captures')
     MAX_PACKETS_IN_MEMORY = 10000
-    CORS_ORIGINS = ["http://localhost:3000", "http://127.0.0.1:3000"]
+    CORS_ORIGINS = ["http://localhost:3000", "http://127.0.0.1:3000", os.getenv('CORS_ORIGINS', '')]
     
     @staticmethod
     def init_app():
